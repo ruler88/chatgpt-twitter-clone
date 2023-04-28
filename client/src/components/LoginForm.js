@@ -4,14 +4,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-const LoginForm = () => {
+const LoginForm = ({ onSubmit }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: Handle login logic with backend server
     console.log('Login form submitted:', username, password);
+    onSubmit({username, password});
   };
 
   return (

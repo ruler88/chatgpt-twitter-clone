@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({ userId: newUser._id, username: newUser.username }, JWT_SECRET);
 
     // Return success response
-    res.status(201).json({ message: 'User registered successfully', token: token });
+    res.status(201).json({ message: 'User registered successfully', token: token, username });
   } catch (error) {
     console.error('Failed to register user:', error);
     res.status(500).json({ error: 'Failed to register user' });
@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ userId: user._id, username: user.username }, JWT_SECRET);
 
     // Return success response with JWT token
-    res.json({ message: 'Login successful', token });
+    res.json({ message: 'Login successful', token, username });
   } catch (error) {
     console.error('Failed to login user:', error);
     res.status(500).json({ error: 'Failed to login user' });

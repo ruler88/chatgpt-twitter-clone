@@ -4,15 +4,15 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-const RegisterForm = () => {
+const RegisterForm = ({ onSubmit }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: Handle register logic with backend server
     console.log('Register form submitted:', username, password, confirmPassword);
+    onSubmit({username, password});
   };
 
   return (
