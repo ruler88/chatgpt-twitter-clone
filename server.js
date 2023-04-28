@@ -86,12 +86,17 @@ app.post('/createPost', passport.authenticate('jwt', { session: false }), (req, 
     });
 });
 
-// Define a route to get the feed
 app.get('/feed', (req, res) => {
+  const { username } = req.query;
+
   // Find the posts from the database, ordered by creation date and limited to 10 posts
-  Posts.find()
-    .sort({ createdAt: -1 }) // Sort by creation date in descending order
-    .limit(10) // Limit to 10 posts
+  let query = Posts.find().sort({ createdAt: -1 }).limit(10);
+
+  if (username) {
+    query = query.where({ username });
+  }
+
+  query
     .exec()
     .then(posts => {
       // Send the list of posts as a response
@@ -102,6 +107,7 @@ app.get('/feed', (req, res) => {
       res.status(500).json({ error: 'Failed to get feed' });
     });
 });
+
 
 
 // Start the server
