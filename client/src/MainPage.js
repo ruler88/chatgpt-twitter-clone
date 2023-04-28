@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import AuthPage from './components/AuthPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,19 +11,19 @@ const useStyles = makeStyles((theme) => ({
   },
   topLeftComponent: {
     textAlign: 'left',
-    height: '20vh',
+    minHeight: '20vh',
     border: '1px solid #000',
     padding: theme.spacing(2),
   },
   topRightComponent: {
     textAlign: 'right',
-    height: '20vh',
+    minHeight: '20vh',
     border: '1px solid #000',
     padding: theme.spacing(2),
   },
   bottomComponent: {
     textAlign: 'center',
-    height: '100vh',
+    minHeight: '100vh',
     border: '1px solid #000',
     padding: theme.spacing(2),
   },
@@ -37,7 +38,7 @@ const MainPage = () => {
         <Grid item xs={12} sm={6}>
           <Container className={classes.topLeftComponent}>
             <div>
-              Login
+              <AuthPage />
             </div>
           </Container>
         </Grid>

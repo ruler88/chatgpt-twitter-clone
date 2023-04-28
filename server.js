@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const usersRoute = require('./routes/users');
 
 const app = express();
 const PORT = 5000; // You can use any port number you prefer
@@ -21,10 +22,11 @@ mongoose.connect('mongodb+srv://kaichao0424:HlJ6UJgz7A5UcPx6@cluster0.iidtyxi.mo
 
 // Middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // Routes
-// Add your API routes here
+app.use('/users', usersRoute);
 
 // Start the server
 app.listen(PORT, () => {
