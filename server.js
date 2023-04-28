@@ -86,6 +86,24 @@ app.post('/createPost', passport.authenticate('jwt', { session: false }), (req, 
     });
 });
 
+// Define a route to get the feed
+app.get('/feed', (req, res) => {
+  // Find the posts from the database, ordered by creation date and limited to 10 posts
+  Posts.find()
+    .sort({ createdAt: -1 }) // Sort by creation date in descending order
+    .limit(10) // Limit to 10 posts
+    .exec()
+    .then(posts => {
+      // Send the list of posts as a response
+      res.status(200).json({ posts });
+    })
+    .catch(err => {
+      // Send an error response
+      res.status(500).json({ error: 'Failed to get feed' });
+    });
+});
+
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

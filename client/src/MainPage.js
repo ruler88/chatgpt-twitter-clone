@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import AuthPage from './components/AuthPage';
+import WriteTweet from './components/WriteTweet';
+import FeedComponent from './components/FeedComponent';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,14 +47,14 @@ const MainPage = () => {
         <Grid item xs={12} sm={6}>
           <Container className={classes.topRightComponent}>
             <div>
-              Write Tweet
+              <WriteTweet />
             </div>
           </Container>
         </Grid>
         <Grid item xs={12}>
           <Container className={classes.bottomComponent}>
             <div>
-              Feed
+              <FeedComponent />
             </div>
           </Container>
         </Grid>

@@ -14,6 +14,10 @@ const postsSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now // Set the default value to the current date and time
   }
 });
 
