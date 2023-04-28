@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const passportJwt = require('passport-jwt');
 const usersRoute = require('./routes/users');
+const Posts = require('./models/posts'); // Import the "Posts" model
 const { JWT_SECRET } = require('./config');
 
 const app = express();
@@ -56,6 +57,33 @@ app.get('/api/verify', passport.authenticate('jwt', { session: false }), (req, r
   // You can access user data as needed
   console.log(req.user);
   return res.json(req.user);
+});
+
+// Define a route to create a new post
+app.post('/createPost', passport.authenticate('jwt', { session: false }), (req, res) => {
+  // Get the user data from the authenticated request
+  const { id: userId, username } = req.user;
+
+  // Get the post content from the request body
+  const { content } = req.body;
+
+  // Create a new post using the "Posts" model
+  const newPost = new Posts({
+    userId,
+    username,
+    content
+  });
+
+  // Save the new post to the database
+  newPost.save()
+    .then(post => {
+      // Send a success response
+      res.status(201).json({ message: 'Post created successfully', post });
+    })
+    .catch(err => {
+      // Send an error response
+      res.status(500).json({ error: 'Failed to create post' });
+    });
 });
 
 // Start the server
