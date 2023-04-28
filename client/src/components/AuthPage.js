@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser, setToken, setUsername } from '../redux/reducers/userReducer'; // Import actions from userSlice
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import Button from '@material-ui/core/Button';
@@ -8,8 +10,10 @@ import API_DOMAIN from '../config'; // Import API_DOMAIN from config.js
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [token, setToken] = useState(null); // State to store token data
-  const [username, setUsername] = useState(null); // State to store username
+  const token = useSelector(state => state.user.token); // Access token from Redux store
+  const username = useSelector(state => state.user.username); // Access username from Redux store
+
+  const dispatch = useDispatch(); // Get dispatch function from Redux
 
   const handleSwitchForm = () => {
     setIsLogin(!isLogin);
@@ -18,8 +22,7 @@ const AuthPage = () => {
   const handleLogout = () => {
     // Clear token from local storage and reset token and username states
     localStorage.removeItem('token');
-    setToken(null);
-    setUsername(null);
+    dispatch(clearUser());
   };
 
   useEffect(() => {
@@ -33,14 +36,14 @@ const AuthPage = () => {
       .then(response => response.json())
       .then(data => {
         // Update state with token and username data if available
-        setToken(token);
-        setUsername(data.username);
+        dispatch(setToken(token));
+        dispatch(setUsername(data.username));
       })
       .catch(error => {
         // Handle error as needed
         console.error(error);
       });
-  }, []); // Empty array as second argument to useEffect to trigger only on mount
+  }, [dispatch]); // Empty array as second argument to useEffect to trigger only on mount
 
 
   const handleLoginSubmit = (loginData) => {
@@ -55,8 +58,8 @@ const AuthPage = () => {
       .then(response => response.json())
       .then(data => {
         // Set token and username data to state
-        setToken(data.token);
-        setUsername(data.username);
+        dispatch(setToken(data.token));
+        dispatch(setUsername(data.username));
         localStorage.setItem('token', data.token);
       })
       .catch(error => {
@@ -77,8 +80,8 @@ const AuthPage = () => {
       .then(response => response.json())
       .then(data => {
         // Set token and username data to state
-        setToken(data.token);
-        setUsername(data.username);
+        dispatch(setToken(data.token));
+        dispatch(setUsername(data.username));
         localStorage.setItem('token', data.token);
       })
       .catch(error => {
